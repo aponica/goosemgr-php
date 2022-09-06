@@ -1,0 +1,29 @@
+{
+  "name": "aponica/goosemgr-php",
+  "version": "1.0.0",
+  "description": "Abstract interface to a relational or object database.",
+  "homepage" : "https://aponica.com/docs/goosemgr-php",
+  "funding": [ { "type": "paypal",
+    "url": "https://www.paypal.com/biz/fund?id=BEHTAS8WARM68" } ],
+  "keywords": [
+    "goosemgr",
+    "database",
+    "model",
+    "interface"
+  ],
+  "type": "library",
+  "license": "MIT",
+  "minimum-stability": "stable",
+  "authors": [
+    { "name": "Opplaud LLC", "email": "dev.support@aponica.com" }
+  ],
+  "require": {
+    "php": ">=8.1"
+  },
+  "autoload": {
+    "files": [
+      "src/cGooseMgr.php"
+    ],
+    "psr-4": {"Aponica\\GooseMgr\\": "src"}
+  }
+}
