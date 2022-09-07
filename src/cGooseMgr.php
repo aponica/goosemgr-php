@@ -34,8 +34,8 @@ abstract class cGooseMgr {
   ///
   /// This method **must** be provided by a derived class!
   ///
-  /// @param hConfig
-  ///   The configuration parameters as expected by the Goose's method for
+  /// @param vConfig
+  ///   The configuration information as expected by the Goose's method for
   ///   establishing a connection, typically containing such information as
   ///   the host, database, username and password.
   ///
@@ -43,7 +43,7 @@ abstract class cGooseMgr {
   ///   A connection to the database.
   //---------------------------------------------------------------------------
 
-  abstract protected function fiCreateConnection( array $hConfig ) : object;
+  abstract protected function fiCreateConnection( mixed $vConfig ) : object;
 
 
   //---------------------------------------------------------------------------
@@ -68,7 +68,7 @@ abstract class cGooseMgr {
   ///   The "Goose" being managed.
   //---------------------------------------------------------------------------
 
-  public function __construct( $hDefinitions, $iGoose ) {
+  public function __construct( array $hDefinitions, object $iGoose ) {
     $this->hDefinitions = $hDefinitions;
     $this->iGoose = $iGoose;
     }
@@ -81,14 +81,14 @@ abstract class cGooseMgr {
   /// used to access it.
   ///
   /// @param hConfig
-  ///   The configuration parameters as expected by the Goose's method for
+  ///   The configuration information as expected by the Goose's method for
   ///   establishing a connection, typically containing such information as
   ///   the host, database, username and password.
   //---------------------------------------------------------------------------
 
-  public function fConnect( $hConfig ) : void {
+  public function fConnect( mixed $vConfig ) : void {
 
-    $this->iConnection = $this->fiCreateConnection( $hConfig );
+    $this->iConnection = $this->fiCreateConnection( $vConfig );
 
     foreach ( $this->hDefinitions as $zModel => $hDef )
       if ( '//' !== $zModel )
