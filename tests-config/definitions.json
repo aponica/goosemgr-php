@@ -1,0 +1,4 @@
+{
+  "//": "this is a comment",
+  "tableA": { "col1" : { "a" : 1 } }
+}
