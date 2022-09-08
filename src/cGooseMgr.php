@@ -34,7 +34,7 @@ abstract class cGooseMgr {
   ///
   /// This method **must** be provided by a derived class!
   ///
-  /// @param vConfig
+  /// @param $vConfig
   ///   The configuration information as expected by the Goose's method for
   ///   establishing a connection, typically containing such information as
   ///   the host, database, username and password.
@@ -51,25 +51,37 @@ abstract class cGooseMgr {
   ///
   /// This is invoked as parent::__construct() within a derived class.
   ///
-  /// @param hDefinitions
+  /// @param $vDefinitions
   ///   The definitions hash (associative array) used to create schemas
   ///   for the database.
   ///
+  ///   If `$vDefinitions` is a string, it is assumed to be the filename
+  ///   (in the <a
+  ///   href="https://www.php.net/manual/en/ini.core.php#ini.include-path">
+  ///   include path</a>) from which the hash can be read as JSON objects
+  ///   (JSON uses objects instead of associative arrays).
+  ///
   ///   The hash contains one member for each table or collection to
   ///   be accessed. The name of the member is the name of the table or
-  ///   collection, and its value is an object as expected by the `Schema`
+  ///   collection, and its value is whatever is expected by the `Schema`
   ///   class of the corresponding "Goose"
   ///   (<a href="https://aponica.com/docs/mysqlgoose-php/">Mysqlgoose</a>).
   ///
   ///   The hash may contain a property named `"//"` with any value;
   ///   it is assumed to be a comment member, and is ignored.
   ///
-  /// @param iGoose
-  ///   The "Goose" being managed.
+  /// @param $iGoose
+  ///   The "Goose" being managed. This is typically hardcoded
+  ///   in the derived class constructor.
   //---------------------------------------------------------------------------
 
-  public function __construct( array $hDefinitions, object $iGoose ) {
-    $this->hDefinitions = $hDefinitions;
+  public function __construct( array|string $vDefinitions, object $iGoose ) {
+
+    if ( "string" === gettype( $vDefinitions ) )
+      $vDefinitions = json_decode(
+        file_get_contents( $vDefinitions, true ), true );
+
+    $this->hDefinitions = $vDefinitions;
     $this->iGoose = $iGoose;
     }
 
@@ -80,7 +92,7 @@ abstract class cGooseMgr {
   /// Establishes the connection to the database and creates the models
   /// used to access it.
   ///
-  /// @param hConfig
+  /// @param $vConfig
   ///   The configuration information as expected by the Goose's method for
   ///   establishing a connection, typically containing such information as
   ///   the host, database, username and password.
@@ -113,7 +125,7 @@ abstract class cGooseMgr {
   //---------------------------------------------------------------------------
   /// Retrieves a model.
   ///
-  /// @param zModel
+  /// @param $zName
   ///   The name of the desired model.
   ///
   /// @returns Object:
