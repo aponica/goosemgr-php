@@ -35,7 +35,44 @@ class cNoGoose {
     return new cNoSchema( $hDef ); }
 }
 
+//-----------------------------------------------------------------------------
+
+function fiGooseMgr( mixed $vDefinitions ) : cDerivedClass {
+
+  $iNoGoose = new cNoGoose();
+
+  return new cDerivedClass( $vDefinitions, $iNoGoose );
+
+  } // fiGooseMgr
+
+
 final class cGooseMgrTest extends TestCase {
+
+  //---------------------------------------------------------------------------
+
+  public function testDefinitionsFromConfigFile() {
+
+    try {
+
+      set_include_path(
+        get_include_path() . PATH_SEPARATOR . './tests-config' );
+
+      $iGooseMgr = fiGooseMgr( 'definitions.json' );
+
+      $iGooseMgr->fConnect( [] );
+
+      $this->assertInstanceOf( cNoGoose::class, $iGooseMgr->fiGoose() );
+
+      $iModel = $iGooseMgr->fiModel( 'tableA' );
+
+      $this->assertSame( 'tableA', $iModel->zModel );
+
+      }
+    catch ( Throwable $iThrown ) {
+      $this->assertSame( 'to never happen', $iThrown );
+      }
+
+    } // testDefinitionsFromConfigFile
 
   //---------------------------------------------------------------------------
 
@@ -47,9 +84,7 @@ final class cGooseMgrTest extends TestCase {
 
       $hDefs = [ '//' => [], 'table1' => $hTable1 ];
 
-      $iNoGoose = new cNoGoose();
-
-      $iGooseMgr = new cDerivedClass( $hDefs, $iNoGoose );
+      $iGooseMgr = fiGooseMgr( $hDefs );
 
       $iGooseMgr->fConnect( [] );
 
