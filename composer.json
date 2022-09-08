@@ -1,6 +1,6 @@
 {
   "name": "aponica/goosemgr-php",
-  "version": "1.1.0",
+  "version": "2.0.0",
   "description": "Abstract interface to a relational or object database.",
   "homepage" : "https://aponica.com/docs/goosemgr-php",
   "funding": [ { "type": "paypal",
