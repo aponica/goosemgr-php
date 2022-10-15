@@ -28,6 +28,8 @@ class cNoConnection {
 class cDerivedClass extends cGooseMgr {
   function fiCreateConnection( $hConfig ) : cNoConnection {
     return new cNoConnection(); }
+  function fzPopulate() : string {
+    return 'POPULATE'; }
   } // cDerivedClass
 
 class cNoGoose {
@@ -87,6 +89,8 @@ final class cGooseMgrTest extends TestCase {
       $iGooseMgr = fiGooseMgr( $hDefs );
 
       $iGooseMgr->fConnect( [] );
+
+      $this->assertSame( 'POPULATE', $iGooseMgr->fzPopulate() );
 
       $this->assertInstanceOf( cNoGoose::class, $iGooseMgr->fiGoose() );
 
