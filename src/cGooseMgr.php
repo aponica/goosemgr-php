@@ -137,6 +137,21 @@ abstract class cGooseMgr {
     return $this->hModels[ $zName ];
     }
 
+
+  //---------------------------------------------------------------------------
+  /// Retrieves the goose's constant to populate nested models.
+  ///
+  /// Used in the third argument to goose find() methods.
+  ///
+  /// This method **must** be provided by a derived class!
+  ///
+  /// @returns string:
+  ///   The value used by the underlying "goose" as the name of the option
+  ///   for populating nested models in a query result.
+  //---------------------------------------------------------------------------
+
+  abstract public function fzPopulate() : string;
+
   } // cGooseMgr
 
 // EOF
