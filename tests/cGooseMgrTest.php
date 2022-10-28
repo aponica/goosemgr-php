@@ -28,11 +28,10 @@ class cNoConnection {
 class cDerivedClass extends cGooseMgr {
   function fiCreateConnection( $hConfig ) : cNoConnection {
     return new cNoConnection(); }
-  function fzPopulate() : string {
-    return 'POPULATE'; }
   } // cDerivedClass
 
 class cNoGoose {
+  public const POPULATE = 'POPULATE';
   function Schema( $hDef ) : cNoSchema {
     return new cNoSchema( $hDef ); }
 }
@@ -56,10 +55,8 @@ final class cGooseMgrTest extends TestCase {
 
     try {
 
-      set_include_path(
-        get_include_path() . PATH_SEPARATOR . './tests-config' );
-
-      $iGooseMgr = fiGooseMgr( 'definitions.json' );
+      $iGooseMgr = fiGooseMgr(
+        __DIR__ . '/..//tests-config/definitions.json' );
 
       $iGooseMgr->fConnect( [] );
 
